@@ -68,11 +68,15 @@ class App extends React.Component {
         {this.state.reading.hex_number &&
           <div>
             <p>{this.state.reading.hex_number} {this.state.reading.hex_character} {this.state.reading.hex_names}</p>
+            <h2>{this.state.reading.hex_character}</h2>
+
             {this.state.are_changing_lines &&
               <div>
                 <p>Changing lines: {this.state.changing_lines}</p>
                 <p>Change to hexagram: {this.state.change_to_hex_num} {this.state.change_to_hex_char} {this.state.change_to_hex_names}</p>
+                <h3>{this.state.change_to_hex_char}</h3>
               </div>}
+
             {!this.state.are_changing_lines &&
               <p>No changing lines.</p>
             }
