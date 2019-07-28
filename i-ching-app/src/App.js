@@ -59,31 +59,25 @@ class App extends React.Component {
   render() {
     return (
       <div className="App" >
+        <h1>Consult the I-Ching (易經)</h1>
         <form onSubmit={this.handleFormSubmit}>
           What is your question? <br />
           <input type="text" value={this.state.question} onChange={this.handleFormChange} />
         </form>
 
         {this.state.reading.hex_number &&
-
           <div>
             <p>{this.state.reading.hex_number} {this.state.reading.hex_character} {this.state.reading.hex_names}</p>
-
             {this.state.are_changing_lines &&
               <div>
                 <p>Changing lines: {this.state.changing_lines}</p>
                 <p>Change to hexagram: {this.state.change_to_hex_num} {this.state.change_to_hex_char} {this.state.change_to_hex_names}</p>
               </div>}
-
             {!this.state.are_changing_lines &&
               <p>No changing lines.</p>
             }
-
-
           </div>
-
         }
-
       </div>
     );
   }
