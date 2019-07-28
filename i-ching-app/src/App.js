@@ -9,9 +9,14 @@ class App extends React.Component {
     this.state = {
       question: "",
       reading: {
-        hex_number: 0,
+        hex_number: null,
         hex_character: "",
-        hex_names: ""
+        hex_names: "",
+        are_changing_lines: true,
+        changing_lines: "",
+        change_to_hex_num: "",
+        change_to_hex_char: "",
+        change_to_hex_names: ""
       }
     }
   }
@@ -22,21 +27,22 @@ class App extends React.Component {
     this.setState({
       reading: {
         hex_number: reading.hexagram.number,
-        hex_character: reading.hex_character,
+        hex_character: reading.hexagram.character,
         hex_names: reading.hexagram.names.join(', ')
       }
     })
 
-
     if (reading.change) {
-      console.log('changing lines: %j', reading.change.changingLines);
-      console.log('change to hexagram: %d %s %s',
-        reading.change.to.number,
-        reading.change.to.character,
-        reading.change.to.names.join(', '));
+      this.setState({
+        are_changing_lines: true,
+        changing_lines: reading.change.changingLines,
+        change_to_hex_num: reading.change.to.number,
+        change_to_hex_char: reading.change.to.character,
+        change_to_hex_names: reading.change.to.names.join(', ')
+      })
 
     } else {
-      console.log('no changing lines');
+      this.setState({ are_changing_lines: false })
     }
   }
 
@@ -54,12 +60,30 @@ class App extends React.Component {
     return (
       <div className="App" >
         <form onSubmit={this.handleFormSubmit}>
-          What is your question?
-            <input type="text" value={this.state.question} onChange={this.handleFormChange} />
+          What is your question? <br />
+          <input type="text" value={this.state.question} onChange={this.handleFormChange} />
         </form>
-        <p>Hexagram number: {this.state.reading.hex_number}</p>
-        <p>Hexagram character: {this.state.reading.hex_character}</p>
-        <p>Hexagram names: {this.state.reading.hex_names}</p>
+
+        {this.state.reading.hex_number &&
+
+          <div>
+            <p>{this.state.reading.hex_number} {this.state.reading.hex_character} {this.state.reading.hex_names}</p>
+
+            {this.state.are_changing_lines &&
+              <div>
+                <p>Changing lines: {this.state.changing_lines}</p>
+                <p>Change to hexagram: {this.state.change_to_hex_num} {this.state.change_to_hex_char} {this.state.change_to_hex_names}</p>
+              </div>}
+
+            {!this.state.are_changing_lines &&
+              <p>No changing lines.</p>
+            }
+
+
+          </div>
+
+        }
+
       </div>
     );
   }
